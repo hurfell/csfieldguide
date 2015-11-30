@@ -1,5 +1,5 @@
 // Variables
-var lists = [{name: "urstapel", values: [123,222,333]}];
+var lists = [{name: "urstapel", values: [123,222,333]},{name: "teststapel", values: [311,122,313]}];
 
 // Program Flow
 
@@ -9,6 +9,7 @@ function initSystem(){
 
     // create new array with numbers
     createDiv("urstapel","launchPad");
+    createDiv("teststapel","launchPad2");
     // Reset the machine?
     alert ("Seite generiert mit " +lists.length + " Elementen.");
 
@@ -58,7 +59,9 @@ function createDiv(divId, targetId)
     newDiv.setAttribute('id',divIdName);
     newDiv.setAttribute('draggable','true');
     newDiv.setAttribute('ondragstart','drag(event)');
-    numbers = getNumbers("urstapel");
+    newDiv.setAttribute('ondragover','allowDrop(event)');
+    newDiv.setAttribute('ondrop','dropCard(event)')
+    numbers = getNumbers(divIdName);
     numbers.forEach(function(entry){
         newDiv.innerHTML += entry + '<br>';
     });
@@ -83,5 +86,12 @@ function findElement(arr, propName, propValue) {
     // will return undefined if not found; you could return a default instead
 }
 
+
+function dropCard(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    alert("Karte gedropt von "+data+ " auf " + ev.target);
+}
 
 
