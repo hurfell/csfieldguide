@@ -86,12 +86,27 @@ function findElement(arr, propName, propValue) {
     // will return undefined if not found; you could return a default instead
 }
 
+function replaceElement(arr, propName, propValue, newValue) {
+    for (var i=0; i < arr.length; i++)
+        if (arr[i][propName] == propValue)
+           arr[i].values = newValue;
+
+    // will return undefined if not found; you could return a default instead
+}
+
 
 function dropCard(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-    alert("Karte gedropt von "+data+ " auf " + ev.target);
+    merge(ev.target,data);
+    alert("Karte gedropt von "+data+ " auf " + ev.target.id);
+}
+
+function merge(unten,oben) {
+    var hilf = findElement(lists, 'name',unten.id).values.concat(findElement(lists, 'name',oben).values);
+    replaceElement(lists, 'name', unten.id, hilf);
+    alert(findElement(lists, 'name',unten.id).values);
 }
 
 
