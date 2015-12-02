@@ -174,6 +174,8 @@ function rand(min, max) {
 }
 
 function createMachineConfig() {
+    if (document.getElementById("stelle"))
+        document.getElementById("stelle").remove();
     var target = document.getElementById("machineConfig");
     var newDiv = document.createElement('input');
     var divIdName = 'stelle';
