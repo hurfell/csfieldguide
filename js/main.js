@@ -30,16 +30,14 @@ function drop(ev) {
     if (ev.target.id == "theMachine") {
         alert("Maschine startet... ");
         ev.target.appendChild(document.getElementById(data));
+
         // Start sorting
-        console.log(data)
         var numbers = getNumbers(data);
-        console.log(numbers);
         var numbers1 = [];
         var numbers2 = [];
         var numbers3 = [];
         var numbers4 = [];
         for ( var i = 0; i < numbers.length; i++) {
-            //HIER MACHT ER NOCH ALLES FALSCH
             if(numbers[i].toString().charAt(stelle.value-1)=='1') {
                 numbers1.push(numbers[i]);
             } else if(numbers[i].toString().charAt(stelle.value-1)=="2") {
@@ -50,18 +48,22 @@ function drop(ev) {
                 numbers4.push(numbers[i]);
             }
         }
-        console.log(numbers1);
-        console.log(numbers2);
-        console.log(numbers3);
-        console.log(numbers4);
-        if(numbers1.is)
-        createResultDivs(1,numbers1,resultField1);
-        createResultDivs(2,numbers2,resultField2);
-        createResultDivs(3,numbers3,resultField3);
-        createResultDivs(4,numbers4,resultField4);
-        // remove urstapel from machine when ready
 
-        // display all new "buckets"
+        //display new buckets
+        if(numbers1.length>=1){
+            createResultDivs(1,numbers1,resultField1);
+        }
+        if(numbers2.length>=1){
+            createResultDivs(2,numbers2,resultField2);
+        }
+        if(numbers3.length>=1){
+            createResultDivs(3,numbers3,resultField3);
+        }
+        if(numbers4.length>=1){
+            createResultDivs(4,numbers4,resultField4);
+        }
+        // remove urstapel from machine when ready
+        deleteDiv(data);
     }
     else {
         alert("Mergevorgang gestartet... ");
