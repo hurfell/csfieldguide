@@ -2,7 +2,6 @@
 var anzahlStellen = 3;
 var maxNumber = 4;
 var startNumbers = 5;
-//var lists = [{name: "urstapel", values: [123,222,333]},{name: "teststapel", values: [311,122,313]}];
 var lists = [];
 
 // Program Flow
@@ -32,6 +31,31 @@ function drop(ev) {
         alert("Maschine startet... ");
         ev.target.appendChild(document.getElementById(data));
         // Start sorting
+        console.log(data)
+        var numbers = getNumbers(data);
+        console.log(numbers);
+        var numbers1 = [];
+        var numbers2 = [];
+        var numbers3 = [];
+        var numbers4 = [];
+        console.log(numbers[1].toString().charAt(stelle.value-1));
+        for ( var i = 0; i < numbers.byteLength; i++) {
+            //HIER MACHT ER NOCH ALLES FALSCH
+            if(numbers[i].toString().charAt(stelle.value-1)=='1') {
+                console.log("...");
+                numbers1.add(number[i]);
+            } else if(numbers[i].toString().charAt(stelle.value-1)=="2") {
+                numbers2.add(number[i]);
+            } else if(numbers[i].toString().charAt(stelle.value-1)=="3") {
+                numbers3.add(number[i]);
+            } else if(numbers[i].toString().charAt(stelle.value-1)=="4") {
+                numbers4.add(number[i]);
+            }
+        }
+        console.log(numbers1);
+        console.log(numbers2);
+        console.log(numbers3);
+        console.log(numbers4);
 
         // remove urstapel from machine when ready
 
