@@ -38,25 +38,27 @@ function drop(ev) {
         var numbers2 = [];
         var numbers3 = [];
         var numbers4 = [];
-        console.log(numbers[1].toString().charAt(stelle.value-1));
-        for ( var i = 0; i < numbers.byteLength; i++) {
+        for ( var i = 0; i < numbers.length; i++) {
             //HIER MACHT ER NOCH ALLES FALSCH
             if(numbers[i].toString().charAt(stelle.value-1)=='1') {
-                console.log("...");
-                numbers1.add(number[i]);
+                numbers1.push(numbers[i]);
             } else if(numbers[i].toString().charAt(stelle.value-1)=="2") {
-                numbers2.add(number[i]);
+                numbers2.push(numbers[i]);
             } else if(numbers[i].toString().charAt(stelle.value-1)=="3") {
-                numbers3.add(number[i]);
+                numbers3.push(numbers[i]);
             } else if(numbers[i].toString().charAt(stelle.value-1)=="4") {
-                numbers4.add(number[i]);
+                numbers4.push(numbers[i]);
             }
         }
         console.log(numbers1);
         console.log(numbers2);
         console.log(numbers3);
         console.log(numbers4);
-
+        if(numbers1.is)
+        createResultDivs(1,numbers1,resultField1);
+        createResultDivs(2,numbers2,resultField2);
+        createResultDivs(3,numbers3,resultField3);
+        createResultDivs(4,numbers4,resultField4);
         // remove urstapel from machine when ready
 
         // display all new "buckets"
@@ -71,6 +73,22 @@ function drop(ev) {
     }
 
 
+}
+
+//position  1 entspricht resultFiel1, etc
+function createResultDivs(position, array,parent) {
+    var newDiv = document.createElement('div');
+    var divIdName = "result"+position;
+    newDiv.setAttribute('id', divIdName);
+    newDiv.setAttribute('draggable', 'true');
+    newDiv.setAttribute('ondragstart', 'drag(event)');
+    newDiv.setAttribute('ondragover', 'allowDrop(event)');
+    newDiv.setAttribute('ondrop', 'dropCard(event)');
+    var newNumbers = array;
+    newNumbers.forEach(function (entry) {
+        newDiv.innerHTML += entry + '<br>';
+    });
+    parent.appendChild(newDiv);
 }
 
 
