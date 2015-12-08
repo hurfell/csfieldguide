@@ -1,8 +1,10 @@
 // Variables
+var stapelName = "result";
 var anzahlStellen = 3;
 var maxNumber = 4;
 var startNumbers = 5;
 var lists = [];
+var totalRows = 0;
 
 // Program Flow
 
@@ -30,40 +32,36 @@ function drop(ev) {
     if (ev.target.id == "theMachine") {
         alert("Maschine startet... ");
         ev.target.appendChild(document.getElementById(data));
-
+        // Append new Row to Result in Frontend:
+        appendRow(maxNumber);
         // Start sorting
+        var sortedArray = [];
         var numbers = getNumbers(data);
-        var numbers1 = [];
-        var numbers2 = [];
-        var numbers3 = [];
-        var numbers4 = [];
+        // Initialize Array
+        for (var i = 0; i <= maxNumber; i++) {
+            sortedArray.push([]);
+        }
         for ( var i = 0; i < numbers.length; i++) {
-            if(numbers[i].toString().charAt(stelle.value-1)=='1') {
-                numbers1.push(numbers[i]);
-            } else if(numbers[i].toString().charAt(stelle.value-1)=="2") {
-                numbers2.push(numbers[i]);
-            } else if(numbers[i].toString().charAt(stelle.value-1)=="3") {
-                numbers3.push(numbers[i]);
-            } else if(numbers[i].toString().charAt(stelle.value-1)=="4") {
-                numbers4.push(numbers[i]);
-            }
+            var stapel = numbers[i].toString().charAt(stelle.value - 1);
+            //console.log("Stapel: "+ stapel);
+            sortedArray[parseInt(stapel)].push(numbers[i]);
+            //console.log(sortedArray);
         }
-
-        //display new buckets
-        if(numbers1.length>=1){
-            createResultDivs(1,numbers1,resultField1);
-        }
-        if(numbers2.length>=1){
-            createResultDivs(2,numbers2,resultField2);
-        }
-        if(numbers3.length>=1){
-            createResultDivs(3,numbers3,resultField3);
-        }
-        if(numbers4.length>=1){
-            createResultDivs(4,numbers4,resultField4);
-        }
-        // remove urstapel from machine when ready
+        // Delete pushed Entry from List
+        removeFromLists(data);
         deleteDiv(data);
+        // Create List Entries
+        var entryCount = totalRows - 10;
+        sortedArray.forEach(function (entry) {
+            if (entry.length >= 1) {
+                //console.log("EntryCount: "+entryCount+ "Values: "+entry);
+                addToLists(stapelName + entryCount, entry);
+                createResultDivs(entryCount, entry, 'resultField' + entryCount);
+            }
+            entryCount++;
+        });
+        console.log(lists);
+
     }
     else {
         alert("Mergevorgang gestartet... ");
@@ -78,19 +76,37 @@ function drop(ev) {
 }
 
 //position  1 entspricht resultFiel1, etc
-function createResultDivs(position, array,parent) {
+function createResultDivs(position, array, parent) {
+    var target = document.getElementById(parent);
     var newDiv = document.createElement('div');
     var divIdName = "result"+position;
     newDiv.setAttribute('id', divIdName);
+    newDiv.setAttribute('class', 'resultCard');
     newDiv.setAttribute('draggable', 'true');
     newDiv.setAttribute('ondragstart', 'drag(event)');
     newDiv.setAttribute('ondragover', 'allowDrop(event)');
     newDiv.setAttribute('ondrop', 'dropCard(event)');
-    var newNumbers = array;
-    newNumbers.forEach(function (entry) {
+    array.forEach(function (entry) {
         newDiv.innerHTML += entry + '<br>';
     });
-    parent.appendChild(newDiv);
+    target.appendChild(newDiv);
+}
+
+function appendRow(numberOfCols) {
+    // How many Bootstrap Cols per Column?
+    var target = document.getElementById("results");
+    var bootstrapCols = 12 / numberOfCols;
+    var outerDiv = document.createElement('div');
+    outerDiv.setAttribute('class', 'row');
+    for (var i = totalRows; i < totalRows + numberOfCols; i++) {
+        var innerDiv = document.createElement('div');
+        innerDiv.setAttribute('class', 'col-md-' + bootstrapCols + ' resultcolumn');
+        innerDiv.setAttribute('id', 'resultField' + (i + 1));
+        outerDiv.appendChild(innerDiv);
+    }
+    target.appendChild(outerDiv);
+    totalRows += 10;
+
 }
 
 
@@ -155,12 +171,19 @@ function createDiv(divId, targetId)
 function addToLists(divName, numberArray) {
     // ToDo: check if divName already is in List
     lists.push({name: divName, values: numberArray});
-    console.log(lists);
+    //console.log(lists);
+}
+
+function removeFromLists(divName) {
+    lists = lists.filter(function (el) {
+        return el.name !== divName;
+    });
 }
 
 function getNumbers(targetId)
 {
     listElement = findElement(lists, 'name',targetId);
+    console.log("targetID: " + targetId + " listElement: " + listElement);
     return listElement.values;
 }
 
