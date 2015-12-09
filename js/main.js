@@ -64,14 +64,40 @@ function drop(ev) {
 
     }
     else {
+        /*
         alert("Mergevorgang gestartet... ");
         // We have two divs to merge
         unteresDiv = ev.target.id;
         oberesDiv = ev.dataTransfer.getData("text");
-        // start merging
+         // start merging*/
 
     }
 
+
+}
+
+function dropCard(ev) {
+    ev.preventDefault();
+
+    // important variables:
+    var droppedDiv = ev.dataTransfer.getData("text");
+    var theTarget = ev.target.id;
+    var targetField = document.getElementById(theTarget).parentElement.id;
+    if (droppedDiv != theTarget) {
+        // lists aktualisieren
+        var array1 = getNumbers(droppedDiv);
+        var array2 = getNumbers(theTarget);
+        array2 = array2.concat(array1);
+        removeFromLists(droppedDiv);
+        removeFromLists(theTarget);
+        addToLists(theTarget, array2);
+        // beide divs löschen
+        deleteDiv(droppedDiv);
+        deleteDiv(theTarget);
+
+        // neues div zeichnen (wohin?)
+        createDiv(theTarget, targetField);
+    }
 
 }
 
@@ -153,6 +179,7 @@ function createDiv(divId, targetId)
     var newDiv = document.createElement('div');
     var divIdName = divId;
     newDiv.setAttribute('id',divIdName);
+    newDiv.setAttribute('class', 'resultCard');
     newDiv.setAttribute('draggable','true');
     newDiv.setAttribute('ondragstart','drag(event)');
     newDiv.setAttribute('ondragover','allowDrop(event)');
@@ -201,15 +228,6 @@ function replaceElement(arr, propName, propValue, newValue) {
            arr[i].values = newValue;
 
     // will return undefined if not found; you could return a default instead
-}
-
-
-function dropCard(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-    merge(ev.target,data);
-    alert("Karte gedropt von "+data+ " auf " + ev.target.id);
 }
 
 function merge(unten,oben) {
