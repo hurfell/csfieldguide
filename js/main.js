@@ -101,7 +101,7 @@ function dropCard(ev) {
 
 }
 
-//position  1 entspricht resultFiel1, etc
+//position  1 entspricht resultField1, etc
 function createResultDivs(position, array, parent) {
     var target = document.getElementById(parent);
     var newDiv = document.createElement('div');
@@ -228,12 +228,6 @@ function replaceElement(arr, propName, propValue, newValue) {
            arr[i].values = newValue;
 
     // will return undefined if not found; you could return a default instead
-}
-
-function merge(unten,oben) {
-    var hilf = findElement(lists, 'name',unten.id).values.concat(findElement(lists, 'name',oben).values);
-    replaceElement(lists, 'name', unten.id, hilf);
-    alert(findElement(lists, 'name',unten.id).values);
 }
 
 function generateNumbers(anzahl, stellen, max) {
