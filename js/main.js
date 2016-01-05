@@ -266,6 +266,23 @@ function createMachineConfig() {
     newDiv.setAttribute('value', "1");
     target.appendChild(newDiv);
 
+    var newDiv2 = document.createElement('input');
+    var divIdName2 = 'feldzahl';
+    newDiv2.setAttribute('id', divIdName2);
+    newDiv2.setAttribute('type', 'number');
+    newDiv2.setAttribute('name', 'whatNumber');
+    newDiv2.setAttribute('min', '4');
+    newDiv2.setAttribute('max', '16');
+    newDiv2.setAttribute('value', "4");
+    target.appendChild(newDiv2);
+
+    var newDiv3 = document.createElement('div');
+    var newButton = document.createElement('button');
+    newButton.setAttribute('style',"width:200px;height:20px");
+    //HIER FEHLT NOCH DER NAMEN FÜR DEN BUTTON DER DIE FELDER ERZEUGT
+    newDiv3.appendChild(newButton);
+    target.appendChild(newDiv3);
+
 }
 
 
