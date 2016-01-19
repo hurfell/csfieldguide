@@ -2,6 +2,10 @@
     width: 200px;
     height: 200px;
     background-color: green;
+    font-size: 10px;
+    color: #FFF;
+    text-align: center;
+    vertical-align: middle;
 }
 #urstapel {
     width: 150px;

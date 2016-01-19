@@ -24,15 +24,31 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div id="machineConfig"></div>
-                <div id="theMachine" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <div id="machineWrap">
+                    <div id="machineConfig">
+                        Nach welcher Stelle soll sortiert werden:<br>
+                        <div id="stelleZumSortieren"></div>
+                        <br>
+                        In welche Zeile soll das Sortierergebnis einsortiert werden:<br>
+                        <div id="confSortierErgebnis"></div>
+                        <br>
+                        <button id="neueZeileAnlegen">neue Zeile für Ergebnisse anlegen</button>
+                        <br>
+                        <br>
+                    </div>
+                    <div id="theMachine" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        Karten zum sortieren bitte hier ablegen.
+                    </div>
                 </div>
+
+
             </div>
             <div class="col-md-2">
                <button onclick="initSystem()">Reset</button>
             </div>
         </div>
-        <div id="results">
+        <div id="results" class="row">
+
 
         </div>
     </div>

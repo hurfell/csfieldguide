@@ -5,6 +5,7 @@ var maxNumber = 4;
 var startNumbers = 5;
 var lists = [];
 var totalRows = 0;
+var resultFieldCount = 0;
 
 // Program Flow
 
@@ -14,6 +15,7 @@ function initSystem(){
     // create new array with numbers
     createStartDiv();
     createMachineConfig();
+    createResultRow();
     console.log("Seite generiert mit " + lists.length + " Elementen.");
 }
 
@@ -252,10 +254,18 @@ function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function createResultRow() {
+    // creates one new Row of results
+    var results = maxNumber;
+    // set the ResultFieldCount
+    // row Numbers = 
+
+}
+
 function createMachineConfig() {
     if (document.getElementById("stelle"))
         document.getElementById("stelle").remove();
-    var target = document.getElementById("machineConfig");
+    var target = document.getElementById("stelleZumSortieren");
     var newDiv = document.createElement('input');
     var divIdName = 'stelle';
     newDiv.setAttribute('id', divIdName);
@@ -265,7 +275,9 @@ function createMachineConfig() {
     newDiv.setAttribute('max', "" + anzahlStellen);
     newDiv.setAttribute('value', "1");
     target.appendChild(newDiv);
-
+    /*
+     if (document.getElementById("feldzahl"))
+     document.getElementById("feldzahl").remove();
     var newDiv2 = document.createElement('input');
     var divIdName2 = 'feldzahl';
     newDiv2.setAttribute('id', divIdName2);
@@ -274,14 +286,14 @@ function createMachineConfig() {
     newDiv2.setAttribute('min', '4');
     newDiv2.setAttribute('max', '16');
     newDiv2.setAttribute('value', "4");
-    target.appendChild(newDiv2);
-
+     target.appendChild(newDiv2);*/
+    /*
     var newDiv3 = document.createElement('div');
     var newButton = document.createElement('button');
     newButton.setAttribute('style',"width:200px;height:20px");
     //HIER FEHLT NOCH DER NAMEN FÜR DEN BUTTON DER DIE FELDER ERZEUGT
     newDiv3.appendChild(newButton);
-    target.appendChild(newDiv3);
+     target.appendChild(newDiv3);*/
 
 }
 
