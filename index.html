@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,52 +11,81 @@
     <!-- Optionales Theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/sorter.css">
-
 </head>
 <body>
-    <div class="container">
+<div class="comtainer-fluid">
+    <div id="main-container" class="container">
         <div class="row">
-            <h1>Sorting</h1>
+            <h1>Bucket Sort</h1>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <h3>Konfiguration</h3>
+                Wie viele Buckets? <br>
+                <!-- nur zu testzwecken statisch, später konfigurierbar machen -->
+                <select id="numberofbuckets" name="bucketcount">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+                <br>
+                <button onclick="initSystem()">Start</button><br>
+
+            </div>
+
+
+        </div>
+        <div class="row bottom-buffer">
+            <div class="col-md-3">
                 <div id="launchPad">
                 </div>
             </div>
             <div class="col-md-6">
-                <div id="machineWrap">
-                    <div id="machineConfig">
-                        Nach welcher Stelle soll sortiert werden:<br>
-                        <div id="stelleZumSortieren"></div>
-                        <br>
-                        In welche Zeile soll das Sortierergebnis einsortiert werden:<br>
-                        <div id="confSortierErgebnis"></div>
-                        <br>
-                        <button id="neueZeileAnlegen">neue Zeile für Ergebnisse anlegen</button>
-                        <br>
-                        <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="machineConfig">
+
+                        </div>
                     </div>
-                    <div id="theMachine" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        Karten zum sortieren bitte hier ablegen.
+                    <div id="anzeigeStelle" class="col-md-6">
+                        X O O
                     </div>
                 </div>
+                <div class="row">
+                    <div id="theMachine" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <p>Karten zum sortieren hier ablegen</p>
+                        <br>
+                        <p id="sortierschritte">Anzahl der Sortierschritte: 0</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="bucketcontroller">
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
 
             </div>
-            <div class="col-md-2">
-               <button onclick="initSystem()">Reset</button>
-            </div>
         </div>
-        <div id="results" class="row">
-
+        <div id="resultcontainer" class="row">
 
         </div>
+
     </div>
 
+</div>
 <!-- jQuery (wird für Bootstrap JavaScript-Plugins benötigt) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Das neueste kompilierte und minimierte JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--<script src="jqueryui/jquery-ui.min.js"></script>-->
 <script src="js/main.js"></script>
     <script>initSystem()</script>
 </body>

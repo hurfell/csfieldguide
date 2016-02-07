@@ -1,5 +1,7 @@
+.bottom-buffer{
+    margin-bottom: 20px;
+}
 #theMachine {
-    width: 200px;
     height: 200px;
     background-color: green;
     font-size: 10px;
@@ -17,4 +19,25 @@
     width: 150px;
     height: 200px;
     background-color: yellow;
+}
+
+.border {
+    border: 1px solid #000;
+}
+
+.bucket {
+    width: 150px;
+    height: 200px;
+}
+
+.testdrag.ui-draggable-dragging{
+    width: 150px!important;
+    height: 200px!important;
+    display: block!important;
+}
+.bucket {
+    background-color: #666666;
+}
+.activebucket {
+    background-color: #003eff;
 }

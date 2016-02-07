@@ -1,21 +1,31 @@
 // Variables
-var stapelName = "result";
 var anzahlStellen = 3;
 var maxNumber = 4;
-var startNumbers = 5;
+var startNumbers = 10;
 var lists = [];
 var totalRows = 0;
-var resultFieldCount = 0;
+var startBucket = 1;
+var bucketCount;
+var sortierschritte;
 
 // Program Flow
 
 function initSystem(){
+    startBucket = 1;
+    sortierschritte = 0;
+
+    aktualisiereSortierschritte();
+
     // Reset all boxes
     deleteAllDivs();
     // create new array with numbers
     createStartDiv();
     createMachineConfig();
-    createResultRow();
+
+    createBuckets();
+    createBucketController();
+    aktualisiereStelle();
+
     console.log("Seite generiert mit " + lists.length + " Elementen.");
 }
 
@@ -35,7 +45,7 @@ function drop(ev) {
         alert("Maschine startet... ");
         ev.target.appendChild(document.getElementById(data));
         // Append new Row to Result in Frontend:
-        appendRow(maxNumber);
+        //appendRow(maxNumber);
         // Start sorting
         var sortedArray = [];
         var numbers = getNumbers(data);
@@ -53,15 +63,41 @@ function drop(ev) {
         removeFromLists(data);
         deleteDiv(data);
         // Create List Entries
-        var entryCount = totalRows - 10;
+        var actualBucket = getStartBucket();
+        var erster = true;
+        console.log(sortedArray);
         sortedArray.forEach(function (entry) {
-            if (entry.length >= 1) {
-                //console.log("EntryCount: "+entryCount+ "Values: "+entry);
-                addToLists(stapelName + entryCount, entry);
-                createResultDivs(entryCount, entry, 'resultField' + entryCount);
+            if(!erster)
+            {
+                if (entry.length >= 1) {
+                    var destination = 'bucket'+actualBucket;
+                    var resultId = 'result'+destination;
+                    // If resultbucket exists, merge the two results
+                    if(document.getElementById(resultId)  !== null)
+                    {
+                        console.log('Merge notwendig');
+                        var array1 = entry;
+                        var array2 = getNumbers(resultId);
+                        array2 = array2.concat(array1);
+                        console.log(array2);
+                        removeFromLists(resultId);
+                        addToLists(resultId, array2);
+                        deleteDiv(resultId);
+                        createDiv(resultId, destination);
+                    }
+                    else
+                    {
+                        //console.log("EntryCount: "+entryCount+ "Values: "+entry);
+                        addToLists(resultId, entry);
+                        createResultDivs(entry, destination,actualBucket);
+                    }
+                }
+                actualBucket++;
             }
-            entryCount++;
+            erster = false;
         });
+        sortierschritte ++;
+        aktualisiereSortierschritte();
         console.log(lists);
 
     }
@@ -78,12 +114,25 @@ function drop(ev) {
 
 }
 
+function aktualisiereSortierschritte()
+{
+    document.getElementById("sortierschritte").innerHTML = "Anzahl der Sortierschritte: " + sortierschritte;
+}
+function getStartBucket() {
+    return startBucket;
+}
+
+function setStartBucket(start){
+    startBucket = start;
+}
+
 function dropCard(ev) {
     ev.preventDefault();
 
     // important variables:
     var droppedDiv = ev.dataTransfer.getData("text");
     var theTarget = ev.target.id;
+    console.log(lists);
     var targetField = document.getElementById(theTarget).parentElement.id;
     if (droppedDiv != theTarget) {
         // lists aktualisieren
@@ -104,10 +153,12 @@ function dropCard(ev) {
 }
 
 //position  1 entspricht resultField1, etc
-function createResultDivs(position, array, parent) {
+function createResultDivs(array, parent, bucketnumber) {
+    console.log(parent);
     var target = document.getElementById(parent);
+
     var newDiv = document.createElement('div');
-    var divIdName = "result"+position;
+    var divIdName = 'result'+parent;
     newDiv.setAttribute('id', divIdName);
     newDiv.setAttribute('class', 'resultCard');
     newDiv.setAttribute('draggable', 'true');
@@ -161,6 +212,7 @@ function createStartDiv() {
     var newDiv = document.createElement('div');
     var divIdName = "urstapel";
     newDiv.setAttribute('id', divIdName);
+    newDiv.setAttribute('class', 'stapel');
     newDiv.setAttribute('draggable', 'true');
     newDiv.setAttribute('ondragstart', 'drag(event)');
     newDiv.setAttribute('ondragover', 'allowDrop(event)');
@@ -254,18 +306,17 @@ function rand(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function createResultRow() {
-    // creates one new Row of results
-    var results = maxNumber;
-    // set the ResultFieldCount
-    // row Numbers = 
-
-}
-
 function createMachineConfig() {
+    var target = document.getElementById("machineConfig");
+
+    if (document.getElementById("stelle_name"))
+        document.getElementById("stelle_name").remove();
+    var stellename = "<p id='stelle_name'> Nach welcher Stelle soll sortiert werden?</p>";
+    target.innerHTML = target.innerHTML + stellename;
     if (document.getElementById("stelle"))
         document.getElementById("stelle").remove();
-    var target = document.getElementById("stelleZumSortieren");
+
+
     var newDiv = document.createElement('input');
     var divIdName = 'stelle';
     newDiv.setAttribute('id', divIdName);
@@ -274,27 +325,121 @@ function createMachineConfig() {
     newDiv.setAttribute('min', '1');
     newDiv.setAttribute('max', "" + anzahlStellen);
     newDiv.setAttribute('value', "1");
+    newDiv.setAttribute('onchange', "aktualisiereStelle()");
     target.appendChild(newDiv);
-    /*
-     if (document.getElementById("feldzahl"))
-     document.getElementById("feldzahl").remove();
-    var newDiv2 = document.createElement('input');
-    var divIdName2 = 'feldzahl';
-    newDiv2.setAttribute('id', divIdName2);
-    newDiv2.setAttribute('type', 'number');
-    newDiv2.setAttribute('name', 'whatNumber');
-    newDiv2.setAttribute('min', '4');
-    newDiv2.setAttribute('max', '16');
-    newDiv2.setAttribute('value', "4");
-     target.appendChild(newDiv2);*/
-    /*
-    var newDiv3 = document.createElement('div');
-    var newButton = document.createElement('button');
-    newButton.setAttribute('style',"width:200px;height:20px");
-    //HIER FEHLT NOCH DER NAMEN FÜR DEN BUTTON DER DIE FELDER ERZEUGT
-    newDiv3.appendChild(newButton);
-     target.appendChild(newDiv3);*/
 
 }
 
+function createBuckets(){
+    // Bucket Count
+    bucketCount = $("#numberofbuckets" ).val();
+    var target = document.getElementById("resultcontainer");
+    var actualRow=1;
+    var appendant = "";
+
+    // Initialize (empty) Results Container:
+    target.innerHTML = "";
+    // Create bucketCount Buckets, max 4 at a row...
+    for (var i=0;i<bucketCount;i++){
+        // Row..
+        if(i%4 == 0)
+        {
+            // New row
+            console.log("New Row...");
+            target.innerHTML = target.innerHTML + "<div id='resultrow"+ actualRow +"' class='row resultrow bottom-buffer'></div>";
+            appendant = document.getElementById("resultrow"+actualRow);
+            actualRow ++;
+        }
+        appendant.innerHTML = appendant.innerHTML + "<div class='col-md-1'></div>";
+        if(i<4){
+            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket activebucket'>Bucket "+ (i+1) +"</div>"
+        }
+        else
+        {
+            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket'>Bucket "+ (i+1) +"</div>";
+        }
+
+
+    }
+}
+
+function createBucketController(){
+    var target = document.getElementById("bucketcontroller");
+    if (document.getElementById("bucketcontrolmenu"))
+        document.getElementById("bucketcontrolmenu").remove();
+    var stellename = "<div id='bucketcontrolmenu' class='row'></div>";
+    target.innerHTML += stellename;
+
+    var leftcontrol = "<div class='col-md-3'><button onclick='bucketControlLeft()'>&lt;</button></div>";
+    var controltext="<div id='controltext' class='col-md-6'>Ergebnis in Buckets 1 bis 4</div>";
+    var rightcontrol = "<div class='col-md-3 text-right'><button onclick='bucketControlRight()'>&gt;</button></div>";
+    target = document.getElementById("bucketcontrolmenu");
+    target.innerHTML += leftcontrol + controltext + rightcontrol;
+
+
+}
+
+function bucketControlLeft(){
+    if(startBucket > 1) {
+        var min = startBucket - 1;
+        var max = startBucket + maxNumber - 1;
+        // Text neu setzen
+        var neuerText = "Ergebnis in Buckets " + min + " bis " + max;
+        document.getElementById("controltext").innerHTML = neuerText;
+        // Umfärben der Buckets
+        // 1. Bucket grau machen und letztes + 1 blau
+        document.getElementById("bucket" + max).className = "";
+        document.getElementById("bucket" + max).className = "col-md-1 bucket";
+
+        document.getElementById("bucket" + min).className = "";
+        document.getElementById("bucket" + min).className = "col-md-1 bucket activebucket";
+        startBucket--;
+    }
+    else
+    {
+        alert("Es geht nicht nach links...");
+    }
+
+}
+
+function bucketControlRight(){
+    if((startBucket + maxNumber)-1 < bucketCount)
+    {
+        var min = startBucket + 1;
+        var max = startBucket + maxNumber;
+        // Text neu setzen
+        var neuerText = "Ergebnis in Buckets "+ min +  " bis " + max;
+        document.getElementById("controltext").innerHTML = neuerText;
+        // Umfärben der Buckets
+        // 1. Bucket grau machen und letztes + 1 blau
+        document.getElementById("bucket"+startBucket).className = "";
+        document.getElementById("bucket"+startBucket).className = "col-md-1 bucket";
+
+        document.getElementById("bucket"+max).className = "";
+        document.getElementById("bucket"+max).className = "col-md-1 bucket activebucket";
+
+
+
+        startBucket ++;
+    }
+    else
+    {
+        alert("Es geht nicht nach rechts...");
+    }
+}
+
+function aktualisiereStelle()
+{
+    // String bauen:
+    var ausgabe = "";
+    var welcheStelle = $("#stelle" ).val();
+
+    for (var i=1; i<=anzahlStellen; i++){
+        if(i == welcheStelle)
+            ausgabe += 'X ';
+        else
+            ausgabe += 'O ';
+    }
+    document.getElementById("anzeigeStelle").innerHTML = ausgabe;
+}
 

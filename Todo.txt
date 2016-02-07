@@ -1,0 +1,25 @@
+- Felder grau hinterlegen/ einrahmen -> die 4 ausgewählten Zielfelder werden farbig hinterlegt (im nächsten Schritt evtl. 4 Ausgänge implementieren) - OK
+
+- "Maschine Schieben" -> 3 Möglichkeiten: flüssiges Ziehen, in Feldern verschieben, Anzeige der 4 ausgewählten Felder (von-bis) in der Maschine und Nummerierung der Stapelplätze - OK
+
+- Anzeige der ausgewählten Ziffer: Darstellung als X00, 0X0, 00X und evtl. Pfeil über das X - OK
+
+- "Karten fliegen lassen": zunächst nacheinander auf den Felder anzeigen lassen, im Weiteren möglicherweise schrittweise Bewegung auf Feld
+
+- Einzelne Schritte rückgängig machen
+
+- Kartengröße optimieren (bei zu vielen Zahlen erscheinen diese teils außerhalb des Stapels
+
+- Sortierschrittzähler (Betätigung der Maschine) - OK
+
+- Abgrenzung zwischen den Zahlen eines Kartenstapels
+
+- Bei zufälliger Zahlerzeugung keine doppelten Zahlen zulassen
+
+- Funktion zum Überprüfen des Ergebnisses: Feld auf den der fertige Stapel gezogen werden kann -> Anzeige ob richtig oder falsch (am Schluss erledigen! Niedrigere Priorität)
+
+- [Möglichkeit, mehr Ziffern (Stellen?) zu wählen]
+
+- Technischer Text (Karten übereinander ziehen, Wie arbeitet die Maschine?, Funktionalitäten von Buttons (z.B. rückgängig) und Eingaben (Stelle der Zahl, Auswahl der Bucketzahl, Auswahl der Zielstapelplätze))
+
+- Didaktischer Text (
