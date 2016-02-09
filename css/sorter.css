@@ -2,7 +2,7 @@
     margin-bottom: 20px;
 }
 #theMachine {
-    height: 200px;
+    height: 300px;
     background-color: green;
     font-size: 10px;
     color: #FFF;
@@ -11,13 +11,13 @@
 }
 #urstapel {
     width: 150px;
-    height: 200px;
+    height: 300px;
     background-color: yellow;
 }
 
 .resultCard {
     width: 150px;
-    height: 200px;
+    height: 300px;
     background-color: yellow;
 }
 
@@ -26,15 +26,10 @@
 }
 
 .bucket {
-    width: 150px;
-    height: 200px;
+    width: 200px;
+    height: 350px;
 }
 
-.testdrag.ui-draggable-dragging{
-    width: 150px!important;
-    height: 200px!important;
-    display: block!important;
-}
 .bucket {
     background-color: #666666;
 }
