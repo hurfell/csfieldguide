@@ -166,7 +166,7 @@ function createResultDivs(array, parent, bucketnumber) {
     newDiv.setAttribute('ondragover', 'allowDrop(event)');
     newDiv.setAttribute('ondrop', 'dropCard(event)');
     array.forEach(function (entry) {
-        newDiv.innerHTML += entry + '<br>';
+        newDiv.innerHTML += '<p class="cardentry">'+entry +'</p>';
     });
     target.appendChild(newDiv);
 }
@@ -219,7 +219,7 @@ function createStartDiv() {
     newDiv.setAttribute('ondrop', 'dropCard(event)');
     var newNumbers = generateNumbers(startNumbers, anzahlStellen, maxNumber);
     newNumbers.forEach(function (entry) {
-        newDiv.innerHTML += entry + '<br>';
+        newDiv.innerHTML += '<p class="cardentry">'+entry +'</p>';
     });
     target.appendChild(newDiv);
 
@@ -240,7 +240,7 @@ function createDiv(divId, targetId)
     newDiv.setAttribute('ondrop', 'dropCard(event)');
     numbers = getNumbers(divIdName);
     numbers.forEach(function(entry){
-        newDiv.innerHTML += entry + '<br>';
+        newDiv.innerHTML += '<p class="cardentry">'+entry +'</p>';
     });
     target.appendChild(newDiv);
     // get numbers
@@ -288,13 +288,18 @@ function generateNumbers(anzahl, stellen, max) {
     // return array
     var zufallsArray = [];
     var i, j, zahl;
-
-    for (i = 0; i < anzahl; i++) {
+    i=0;
+    while (i<10) {
         zahl = "";
         for (j = 0; j < stellen; j++) {
             zahl += rand(1, max);
         }
-        zufallsArray.push(zahl);
+        if($.inArray(zahl,zufallsArray) == -1)
+        {
+            zufallsArray.push(zahl);
+            i++;
+        }
+
     }
     console.log(zufallsArray);
     return zufallsArray
@@ -352,14 +357,43 @@ function createBuckets(){
         }
         appendant.innerHTML = appendant.innerHTML + "<div class='col-md-1'></div>";
         if(i<4){
-            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket activebucket'>Bucket "+ (i+1) +"</div>"
+            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket activebucket' ondrop='moveToBucket(event)' ondragover='allowDrop(event)'>Bucket "+ (i+1) +"</div>"
         }
         else
         {
-            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket'>Bucket "+ (i+1) +"</div>";
+            appendant.innerHTML = appendant.innerHTML + "<div id='bucket"+(i+1)+"' class='col-md-1 bucket' ondrop='moveToBucket(event)' ondragover='allowDrop(event)'>Bucket "+ (i+1) +"</div>";
         }
 
 
+    }
+}
+
+function moveToBucket(ev) {
+    //alert("Wie frech...!");
+
+
+    ev.preventDefault();
+    var droppedDiv = ev.dataTransfer.getData("text");
+    var theTarget = ev.target.id;
+    //var targetField = document.getElementById(theTarget).id;
+    console.log(theTarget);
+    // Liegt auf dem Bucket schon ein Resultbucket? Wenn ja, dann musst Du mergen...
+    if ((theTarget.lastIndexOf("resultbucket", 0) !== 0) && $("#"+theTarget+" .resultCard").length == 0){
+        ///do something
+        console.log("moveToBucket");
+        if (droppedDiv != theTarget) {
+            // lists aktualisieren
+            console.log("Target: "+ theTarget);
+            var array1 = getNumbers(droppedDiv);
+            removeFromLists(droppedDiv);
+            addToLists("result"+theTarget, array1);
+            console.log(lists);
+            // beide divs löschen
+            deleteDiv(droppedDiv);
+            console.log(droppedDiv);
+            // neues div zeichnen (wohin?)
+            createDiv("result"+theTarget, theTarget);
+        }
     }
 }
 
@@ -371,7 +405,7 @@ function createBucketController(){
     target.innerHTML += stellename;
 
     var leftcontrol = "<div class='col-md-3'><button onclick='bucketControlLeft()'>&lt;</button></div>";
-    var controltext="<div id='controltext' class='col-md-6'>Ergebnis in Buckets 1 bis 4</div>";
+    var controltext="<div id='controltext' class='col-md-6 text-center'>Ergebnis in Buckets 1 bis 4</div>";
     var rightcontrol = "<div class='col-md-3 text-right'><button onclick='bucketControlRight()'>&gt;</button></div>";
     target = document.getElementById("bucketcontrolmenu");
     target.innerHTML += leftcontrol + controltext + rightcontrol;
@@ -382,14 +416,14 @@ function createBucketController(){
 function bucketControlLeft(){
     if(startBucket > 1) {
         var min = startBucket - 1;
-        var max = startBucket + maxNumber - 1;
+        var max = startBucket + maxNumber - 2;
         // Text neu setzen
         var neuerText = "Ergebnis in Buckets " + min + " bis " + max;
         document.getElementById("controltext").innerHTML = neuerText;
         // Umfärben der Buckets
         // 1. Bucket grau machen und letztes + 1 blau
-        document.getElementById("bucket" + max).className = "";
-        document.getElementById("bucket" + max).className = "col-md-1 bucket";
+        document.getElementById("bucket" + (max+1)).className = "";
+        document.getElementById("bucket" + (max+1)).className = "col-md-1 bucket";
 
         document.getElementById("bucket" + min).className = "";
         document.getElementById("bucket" + min).className = "col-md-1 bucket activebucket";

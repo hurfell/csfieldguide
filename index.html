@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>Bucket Sort</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
     <!-- Das neueste kompilierte und minimierte CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
 
     <!-- Optionales Theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="bootstrap/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/sorter.css">
     <link rel="stylesheet" href="featherlight/featherlight.min.css">
 </head>
@@ -18,66 +18,65 @@
     <div id="main-container" class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Bucket Sort</h1>
+                <h1>Bucket Sort & Radix Sort</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                Bei dieser Anwendung geht es darum einen Stapel karten zu sortieren. Ziel dabei ist es mit möglichst
-                wenigen Feldern und Durchgängen auszukommen.
-                Vor Beginn des Sortierens wird oben links in der Rubrik Konfiguration eingestellt, wie viele Buckets,
-                oder auch Hilfsfelder, erstellt werden sollen. Im Anschluss daran werden keine neuen Felder mehr
-                hinzukommen.
-                Zum Sortieren steht Ihnen eine Maschine zur Verfügung, die nach folgendem Prinzip arbeitet. Zunächst
-                wird eine Stelle ausgewählt, nach der die Karten geordnet werden. Die Einstellung der Stelle wird
-                oberhalb der Maschine ausgewählt und ist durch eine kleine Graphik veranschaulicht. Die Ausgabefelder
-                werden durch die Pfeiltasten unter der Maschine gewählt. Die blau hinterlegten Felder sind die aktiven
-                Ausgabefelder, die anderen sind grau hinterlegt.
-                Zur Funktionsweise der Maschine. Der Kartenstapel, der via Drag and Drop auf die Maschine gelegt wird,
-                wird folgendermaßen bearbeitet. Die oberste Karte des Stapels wird untersucht, ob sie mit an der Stelle,
-                die zuvor ausgewählt wurde, eine "1", "2", "3" oder "4" stehen hat. Dementsprechend wird die Karte auf
-                das erste Ausgabefeld bei einer 1, auf das zweite Ausgabefeld bei einer zwei und so weiter gelegt. Liegt
-                auf diesen Feld bereits eine oder mehrere Karten, so werden die neuen Karten darunter gelegt. Nach der
-                ersten Karte wird mit der zweiten Karte des Stapels genauso verfahren. Es ist grundsätzlich möglich die
-                Ausgabefelder so zu legen, das dort schon vor dem Benutzen der Maschine karten liegen. In diesem Falle
-                agiert die Maschine vollkommen analog und sortiert die neuen Karten darunter. Ebenso kann jeder Stapel
-                oder jede einzelne Karte die Maschine betötigen. Die Anzahl der Verwendungen der Maschine werden auf der
-                Maschine angezeigt.
-                Neben der Maschine können auch die Kartenstapel übereinander gezogen werden. Dabei werden die Karten,
-                die auf die anderen Karten gezogen werden, darunter angeordnet.
-                Mit diesen Hilfsmitteln und Handlungsmöglichkeiten ist es möglich diese Karten auf die
-                unterschiedlichsten Möglichkeiten zu sortieren. Ist Ihnen der erste Sortierversuch geglückt, so
-                versuchen sie mit weniger Buckets erneut zu sortieren.
+                <p class="text-justify">
+                    ﻿Bei dieser Anwendung geht es darum einen Stapel karten zu sortieren. Ziel dabei ist es mit möglichst
+                    wenigen Feldern und Durchgängen auszukommen.
+                    Vor Beginn des Sortierens wird oben links in der Rubrik "Konfiguration" eingestellt, wie viele Buckets,
+                    oder auch Hilfsfelder, erstellt werden sollen. Im Anschluss daran werden keine neuen Felder mehr
+                    hinzukommen.
+                    Zum Sortieren steht Ihnen eine Maschine zur Verfügung, die nach folgendem Prinzip arbeitet. Zunächst
+                    wird eine Stelle ausgewählt, nach der die Karten geordnet werden. Die Einstellung der Stelle wird
+                    oberhalb der Maschine ausgewählt und ist durch eine kleine Graphik veranschaulicht. Die Ausgabefelder
+                    werden durch die Pfeiltasten unter der Maschine gewählt. Die blau hinterlegten Felder sind die aktiven
+                    Ausgabefelder, die Anderen sind grau hinterlegt.
+                    Zur Funktionsweise der Maschine: Der Kartenstapel, der via Drag and Drop auf die Maschine gelegt wird,
+                    wird folgendermaßen bearbeitet. Die unterste Karte des Stapels wird untersucht, ob sie mit an der
+                    Stelle, die zuvor ausgewählt wurde, eine "1", "2", "3" oder "4" stehen hat. Dementsprechend wird die
+                    Karte auf das erste Ausgabefeld bei einer 1, auf das zweite Ausgabefeld bei einer zwei und so weiter
+                    gelegt. Liegt auf diesen Feld bereits eine oder mehrere Karten, so werden die neuen Karten darüber
+                    gelegt. Nach der ersten Karte wird mit der zweiten Karte des Stapels genauso verfahren. Es ist
+                    grundsätzlich möglich die Ausgabefelder so zu legen, das dort schon vor dem Benutzen der Maschine karten
+                    liegen. In diesem Falle agiert die Maschine vollkommen analog und sortiert die neuen Karten darüber.
+                    Ebenso kann jeder Stapel oder jede einzelne Karte die Maschine betötigen. Die Anzahl der Verwendungen
+                    der Maschine werden auf der Maschine angezeigt.
+                    Neben der Maschine können auch die Kartenstapel übereinander gezogen werden. Dabei werden die Karten,
+                    die auf die anderen Karten gezogen werden, darüber angeordnet.
+                    Mit diesen Hilfsmitteln und Handlungsmöglichkeiten ist es möglich diese Karten auf die
+                    unterschiedlichsten Möglichkeiten zu sortieren. Ist Ihnen der erste Sortierversuch geglückt, so
+                    versuchen sie mit weniger Buckets erneut zu sortieren.
+                </p>
+
             </div>
         </div>
         <div class="row bottom-buffer">
             <div class="col-md-12">
+
+            </div>
+        </div>
+        <div class="row bottom-buffer">
+            <div class="col-md-3">
                 <h3>Konfiguration</h3>
                 Wie viele Buckets? <br>
                 <!-- nur zu testzwecken statisch, später konfigurierbar machen -->
                 <select id="numberofbuckets" name="bucketcount">
                     <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
                     <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
                     <option value="12">12</option>
+                    <option value="16">16</option>
+                    <option value="20">20</option>
+                    <option value="24">24</option>
+                    <option value="28">28</option>
                 </select>
                 <br>
                 <br>
                 <button class="btn btn-default" onclick="initSystem()">Start</button>
                 &nbsp;&nbsp;
                 <a href="help.html" id="helpbutton" class="btn btn-default" data-featherlight="ajax">Hilfe</a><br>
-            </div>
-        </div>
-        <div class="row bottom-buffer">
-            <div class="col-md-3">
-                <h3>Startstapel</h3>
-                <div id="launchPad">
-                </div>
             </div>
             <div class="col-md-6">
                 <h3>Sortiermaschine</h3>
@@ -104,7 +103,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 randlinks">
+                <div>
+                    <h3>Startstapel</h3>
+                    <div id="launchPad">
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -122,14 +126,18 @@
 
 </div>
 <!-- jQuery (wird für Bootstrap JavaScript-Plugins benötigt) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <!-- Das neueste kompilierte und minimierte JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="bootstrap/bootstrap.min.js"></script>
 <!--<script src="jqueryui/jquery-ui.min.js"></script>-->
 <script src="js/main.js"></script>
+<script src="js/jquery.dnd_page_scroll.js"></script>
 <script src="featherlight/featherlight.min.js"></script>
 <script>
-    initSystem()
+    initSystem();
+    $(document).ready(function () {
+        $().dndPageScroll();
+    });
 </script>
 </body>
 </html>

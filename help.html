@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Help</title>
+    <title>Hilfe</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            Ziel bei der Übung ist es verschiedene Sortierverfahren zu entdecken.
+            <p>Ziel bei der Übung ist es verschiedene Sortierverfahren zu entdecken.</p><br>
 
-            Bucketsort
-            Eine Möglichkeit ist das Bucketsort verfahren. Hierbei werden die Probleme in kleinere Probleme unterteilt.
+            <h3>Bucketsort</h3>
+            <p>Eine Möglichkeit ist das Bucketsort verfahren. Hierbei werden die Probleme in kleinere Probleme unterteilt.
             Diese Buckets werden dann weiter sortiert und im Anschluss konkateniert. Es könnte hierbei erst nach der
             ersten Stelle sortiert werden. Man bräuchte hierzu 4 Buckets. Nun müsste jeweils nach der zweiten Stelle
             sortiert werden. Dies pflanzt sich letztendlich bis zur letzten Stelle durch. Anschließend können die Karten
@@ -24,10 +24,10 @@
             Sortiere und der Reihe nach übereinander lege, so sind diese sortiert. Da die Stapel nach dem gleichen
             Prinzip sortiert werden, bleibt lediglich eine Terminierung offen. Diese ist gegeben, da die Anzahl Stellen
             endlich ist und beim Sortieren der letzten Stellen diese in der richtigen Reihenfolge übereinander gelegt
-            werden können.
+            werden können.</p>
 
-            Radixsort
-            Die Möglichkeit, die mit deutlich weniger Buckets auskommt ist die Methode des Radixsort. Es ist dabei
+            <h3>Radixsort</h3>
+            <p>Die Möglichkeit, die mit deutlich weniger Buckets auskommt ist die Methode des Radixsort. Es ist dabei
             möglich mit so vielen Buckets wie es Ziffern gibt auszukommen. Begonnen mit der letzten Stelle wird der
             Stapel durch die Maschine Partioniert. Anschließend wird in der Sammelphase jeweils die größten Karten unter
             die kleineren gehangen. Also von rechts nach links aufgesammelt. Im nächsten Schritt wird dann nach der
@@ -44,11 +44,11 @@
             auf die letzten n Ziffern größer. Dies gilt für jeden Stapel. Die n+1-Stelle ist dabei bei jedem Stapel die
             gleiche, da dies durch die Maschine genau so realisiert wird und in sich sortiert. Legt man diese Stapel
             wieder in der richtigen Art und Weise übereinander, so ist auch der neue Stapel sortiert, aber diesmal nach
-            den letzten n+1-Stellen. Damit ist das Verfahren also korrekt.
+            den letzten n+1-Stellen. Damit ist das Verfahren also korrekt.</p>
 
-            Durch die Variation der Buckets werden die Möglichkeiten Stapel beiseite zu legen und erst einmal nicht
+            <p>Durch die Variation der Buckets werden die Möglichkeiten Stapel beiseite zu legen und erst einmal nicht
             weiter zu betrachten, wie das beim Bucketsort der Fall ist nicht möglich. Es müssen sich Alternativen
-            überlegt werden, wie man ohne zusätzlichen Speicher sortieren kann.
+            überlegt werden, wie man ohne zusätzlichen Speicher sortieren kann.</p>
         </div>
     </div>
 </div>

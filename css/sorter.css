@@ -1,24 +1,33 @@
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15px;
+}
 .bottom-buffer{
     margin-bottom: 20px;
 }
+.randlinks {
+    padding-left: 100px;
+}
 #theMachine {
     height: 300px;
-    background-color: green;
-    font-size: 10px;
-    color: #FFF;
+    background-color: rgb(170,135,222);
+    border: 2px solid rgb(90,44,160);
+    border-radius: 8px;
+    font-size: 12px;
+    color: #000000;
     text-align: center;
     vertical-align: middle;
 }
-#urstapel {
-    width: 150px;
-    height: 300px;
-    background-color: yellow;
-}
-
+#urstapel,
 .resultCard {
     width: 150px;
-    height: 300px;
-    background-color: yellow;
+    min-height: 100px;
+    padding-bottom: 100px;
+    border-radius: 15px;
+    border: 2px solid rgb(0,212,85);
+    background-color: rgb(85,255,153);
+    text-align: center;
+    border-top: none;
 }
 
 .border {
@@ -31,8 +40,17 @@
 }
 
 .bucket {
-    background-color: #666666;
+    background-color: #e6e6e6;
+    border-radius: 8px;
 }
 .activebucket {
-    background-color: #003eff;
+    background-color: rgb(255,153,85);
+    border: 2px solid rgb(170,68,0);
+    border-radius: 8px;
+}
+.cardentry {
+    border-top: 2px solid  rgb(0,212,85);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin: 0;
 }
