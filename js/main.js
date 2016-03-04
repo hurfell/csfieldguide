@@ -42,68 +42,76 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     console.log(ev.target.id);
     if (ev.target.id == "theMachine") {
-        alert("Maschine startet... ");
-        ev.target.appendChild(document.getElementById(data));
-        // Append new Row to Result in Frontend:
-        //appendRow(maxNumber);
-        // Start sorting
-        var sortedArray = [];
-        var numbers = getNumbers(data);
-        // Initialize Array
-        for (var i = 0; i <= maxNumber; i++) {
-            sortedArray.push([]);
-        }
-        for ( var i = 0; i < numbers.length; i++) {
-            var stapel = numbers[i].toString().charAt(stelle.value - 1);
-            //console.log("Stapel: "+ stapel);
-            sortedArray[parseInt(stapel)].push(numbers[i]);
-            //console.log(sortedArray);
-        }
-        // Delete pushed Entry from List
-        removeFromLists(data);
-        deleteDiv(data);
-        // Create List Entries
-        var actualBucket = getStartBucket();
-        var erster = true;
-        console.log(sortedArray);
-        sortedArray.forEach(function (entry) {
-            if(!erster)
-            {
-                if (entry.length >= 1) {
-                    var destination = 'bucket'+actualBucket;
-                    var resultId = 'result'+destination;
-                    // If resultbucket exists, merge the two results
-                    if(document.getElementById(resultId)  !== null)
-                    {
-                        console.log('Merge notwendig');
-                        var array1 = entry;
-                        var array2 = getNumbers(resultId);
-                        array2 = array2.concat(array1);
-                        console.log(array2);
-                        removeFromLists(resultId);
-                        addToLists(resultId, array2);
-                        deleteDiv(resultId);
-                        createDiv(resultId, destination);
-                    }
-                    else
-                    {
-                        //console.log("EntryCount: "+entryCount+ "Values: "+entry);
-                        addToLists(resultId, entry);
-                        createResultDivs(entry, destination,actualBucket);
-                    }
-                }
-                actualBucket++;
+        //alert("Maschine startet... ");
+        // Display Zahnrad, wait a second...
+        $( "#zahnrad" ).show();
+        setTimeout(function(){
+            $( "#zahnrad" ).hide();
+            ev.target.appendChild(document.getElementById(data));
+            // Append new Row to Result in Frontend:
+            //appendRow(maxNumber);
+            // Start sorting
+            var sortedArray = [];
+            var numbers = getNumbers(data);
+            // Initialize Array
+            for (var i = 0; i <= maxNumber; i++) {
+                sortedArray.push([]);
             }
-            erster = false;
-        });
-        sortierschritte ++;
-        aktualisiereSortierschritte();
-        console.log(lists);
+            for ( var i = 0; i < numbers.length; i++) {
+                var stapel = numbers[i].toString().charAt(stelle.value - 1);
+                //console.log("Stapel: "+ stapel);
+                sortedArray[parseInt(stapel)].push(numbers[i]);
+                //console.log(sortedArray);
+            }
+            // Delete pushed Entry from List
+            removeFromLists(data);
+            deleteDiv(data);
+            // Create List Entries
+            var actualBucket = getStartBucket();
+            var erster = true;
+            console.log(sortedArray);
+            sortedArray.forEach(function (entry) {
+                if(!erster)
+                {
+                    if (entry.length >= 1) {
+                        var destination = 'bucket'+actualBucket;
+                        var resultId = 'result'+destination;
+                        // If resultbucket exists, merge the two results
+                        if(document.getElementById(resultId)  !== null)
+                        {
+                            console.log('Merge notwendig');
+                            var array1 = entry;
+                            var array2 = getNumbers(resultId);
+                            array2 = array2.concat(array1);
+                            console.log(array2);
+                            removeFromLists(resultId);
+                            addToLists(resultId, array2);
+                            deleteDiv(resultId);
+                            createDiv(resultId, destination,true);
+                        }
+                        else
+                        {
+                            //console.log("EntryCount: "+entryCount+ "Values: "+entry);
+                            addToLists(resultId, entry);
+                            createResultDivs(entry, destination,actualBucket);
+                        }
+                    }
+                    actualBucket++;
+                }
+                erster = false;
+            });
+            sortierschritte ++;
+            aktualisiereSortierschritte();
+            console.log(lists);
+        }, 500);
+
+
+
+
 
     }
     else {
         /*
-        alert("Mergevorgang gestartet... ");
         // We have two divs to merge
         unteresDiv = ev.target.id;
         oberesDiv = ev.dataTransfer.getData("text");
@@ -156,6 +164,7 @@ function dropCard(ev) {
 function createResultDivs(array, parent, bucketnumber) {
     console.log(parent);
     var target = document.getElementById(parent);
+    var machine = document.getElementById("theMachine");
 
     var newDiv = document.createElement('div');
     var divIdName = 'result'+parent;
@@ -168,7 +177,29 @@ function createResultDivs(array, parent, bucketnumber) {
     array.forEach(function (entry) {
         newDiv.innerHTML += '<p class="cardentry">'+entry +'</p>';
     });
-    target.appendChild(newDiv);
+
+    // Animation of Div...
+    machine.appendChild(newDiv);
+    var pos = $("#theMachine").offset();
+    $("body").prepend($("#"+divIdName).detach());
+    var move = $("#"+divIdName).css({
+        "position": "absolute",
+        "z-index": "9999",
+        "top": pos.top,
+        "left": pos.left
+    });
+
+    var ziel = $("#"+parent).offset();
+    move.animate({
+        "top": ziel.top,
+        "left": ziel.left
+    }, 1500, function(){
+        move.css({"top":"","left":""});
+        $("#"+parent).prepend(move.detach());
+    });
+
+    // move new Div to target...
+    //target.appendChild(newDiv);
 }
 
 function appendRow(numberOfCols) {
@@ -227,9 +258,12 @@ function createStartDiv() {
     addToLists(divIdName, newNumbers);
 
 }
-function createDiv(divId, targetId)
+function createDiv(divId, targetId, withAnimate)
 {
+    if (typeof(withAnimate)==='undefined') withAnimate = false;
+
     var target = document.getElementById(targetId);
+    var machine = document.getElementById("theMachine");
     var newDiv = document.createElement('div');
     var divIdName = divId;
     newDiv.setAttribute('id',divIdName);
@@ -242,10 +276,30 @@ function createDiv(divId, targetId)
     numbers.forEach(function(entry){
         newDiv.innerHTML += '<p class="cardentry">'+entry +'</p>';
     });
-    target.appendChild(newDiv);
-    // get numbers
+    if(withAnimate)
+    {
+        machine.appendChild(newDiv);
+        var pos = $("#theMachine").offset();
+        $("body").prepend($("#"+divIdName).detach());
+        var move = $("#"+divIdName).css({
+            "position": "absolute",
+            "z-index": "9999",
+            "top": pos.top,
+            "left": pos.left
+        });
 
-    // add div to list
+        var ziel = $("#"+targetId).offset();
+        move.animate({
+            "top": ziel.top,
+            "left": ziel.left
+        }, 1500, function(){
+            move.css({"top":"","left":""});
+            $("#"+parent).prepend(move.detach());
+        });
+    }
+    else
+        target.appendChild(newDiv);
+
 
 }
 
@@ -369,9 +423,6 @@ function createBuckets(){
 }
 
 function moveToBucket(ev) {
-    //alert("Wie frech...!");
-
-
     ev.preventDefault();
     var droppedDiv = ev.dataTransfer.getData("text");
     var theTarget = ev.target.id;
@@ -405,7 +456,7 @@ function createBucketController(){
     target.innerHTML += stellename;
 
     var leftcontrol = "<div class='col-md-3'><button onclick='bucketControlLeft()'>&lt;</button></div>";
-    var controltext="<div id='controltext' class='col-md-6 text-center'>Ergebnis in Buckets 1 bis 4</div>";
+    var controltext="<div id='controltext' class='col-md-6 '>Ergebnis in Buckets 1 bis 4</div>";
     var rightcontrol = "<div class='col-md-3 text-right'><button onclick='bucketControlRight()'>&gt;</button></div>";
     target = document.getElementById("bucketcontrolmenu");
     target.innerHTML += leftcontrol + controltext + rightcontrol;
@@ -431,7 +482,7 @@ function bucketControlLeft(){
     }
     else
     {
-        alert("Es geht nicht nach links...");
+        $('#linksmodal').modal('show');
     }
 
 }
@@ -458,7 +509,7 @@ function bucketControlRight(){
     }
     else
     {
-        alert("Es geht nicht nach rechts...");
+        $('#rechtsmodal').modal('show');
     }
 }
 
