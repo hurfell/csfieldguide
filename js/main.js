@@ -294,7 +294,7 @@ function createDiv(divId, targetId, withAnimate)
             "left": ziel.left
         }, 1500, function(){
             move.css({"top":"","left":""});
-            $("#"+parent).prepend(move.detach());
+            $("#"+targetId).prepend(move.detach());
         });
     }
     else
